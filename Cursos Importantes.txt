@@ -1,0 +1,8 @@
+ruta curso Vue Js 
+
+Q:\11. Desarrollo\VUE JS
+
+https://www.youtube.com/watch?v=d1EoJFrJKZM&list=PLDbrnXa6SAzXBvGdqrSftpUJlOoThypJB
+
+
+Q:\9. Gestion Conocimiento\symfony\Cursos SymfonyCasts\Symfony 4\Doctrine & the Database
