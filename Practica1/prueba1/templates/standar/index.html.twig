@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello StandarController!{% endblock %}
+
+{% block body %}
+
+
+
+<!doctype html>
+<html lang="en">
+  <body>
+
+ {{ parent() }}
+
+
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+   <h1>Hello {{ usuario }} ✅</h1>
+   <p>la variable de nombre  fue definida desde el controlador! </p>
+
+
+La suma de las dos variables desde el controlador: {{suma}}
+
+<br>
+<br>
+
+<a href="{{path('pagina2',{'nombre':'Diana Salazar'}) }}" >  ir a la pagina 2 </a>
+<br>
+<br>
+
+{% if(numero1 > numero2 )   %}
+<div>
+<p>Si cumple la condición :P  </p>
+</div>
+{% endif %}
+
+
+<div>
+<p> Nombres del arreglo  </p>
+{{nombre | upper }}
+</div>
+
+
+<div>
+<p> Separado por comas, el arreglo   </p>
+{% set nombres = nombre | split(',') %}
+
+
+{% for nombre in nombres  %}
+*{{nombre}} <br>
+
+{% endfor %}
+</div>
+
+
+
+
+<button type="button" class="btn btn-primary">Primary</button>
+<button type="button" class="btn btn-secondary">Secondary</button>
+<button type="button" class="btn btn-success">Success</button>
+<button type="button" class="btn btn-danger">Danger</button>
+<button type="button" class="btn btn-warning">Warning</button>
+<button type="button" class="btn btn-info">Info</button>
+<button type="button" class="btn btn-light">Light</button>
+<button type="button" class="btn btn-dark">Dark</button>
+
+<button type="button" class="btn btn-link">Link</button>
+
+
+
+Holaaa entra al controlador standar 
+    This friendly message is coming from:
+    primer controlador, la ruta esta definida en el controller 
+    <ul>
+        <li>Your controller at <code><a href="{{ 'C:/Users/ingenierodesarrollo8/Desktop/TRABAJO/Practica/Practica1/prueba1/src/Controller/StandarController.php'|file_link(0) }}">src/Controller/StandarController.php</a></code></li>
+        <li>Your template at <code><a href="{{ 'C:/Users/ingenierodesarrollo8/Desktop/TRABAJO/Practica/Practica1/prueba1/templates/standar/index.html.twig'|file_link(0) }}">templates/standar/index.html.twig</a></code></li>
+    </ul>
+</div>
+
+
+  </body>
+</html> 
+
+{% endblock %}

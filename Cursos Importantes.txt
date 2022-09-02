@@ -6,3 +6,10 @@ https://www.youtube.com/watch?v=d1EoJFrJKZM&list=PLDbrnXa6SAzXBvGdqrSftpUJlOoThy
 
 
 Q:\9. Gestion Conocimiento\symfony\Cursos SymfonyCasts\Symfony 4\Doctrine & the Database
+
+
+acceso a la base de datos phpmyadmin
+
+http://localhost/phpmyadmin/
+
+

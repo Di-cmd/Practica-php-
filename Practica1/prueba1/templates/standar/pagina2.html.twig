@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello pagina 2!{% endblock %}
+
+{% block body %}
+
+
+{# Este parent sirve para llamar todo lo que este dentro de la base. trae toda la informacion desde }
+donde se esta haciendo la extends  #}
+
+{{ parent() }}
+
+<h1> Pagina 2 </h1>
+
+<div> 
+    <p>Nombre del Usuario </p>
+</div>  
+
+
+<div> 
+    <p>{{nombre}} </p>
+</div>  
+
+<div> 
+    <p>Menu </p>
+</div>  
+
+
+<a href="{{ path('index')  }}"> ir a la Pagina Inicial  </a>
+
+{# esto es para comentarios en twig; b
+#}
+
+
+holaa
+
+{#Para asignar variables: #}
+
+{% set MiVariable="Hola Mundo"  %}
+<div style="text-align:center">
+{{MiVariable}}
+</div>
+
+<button type="button" class="btn btn-primary">Primary</button>
+<button type="button" class="btn btn-secondary">Secondary</button>
+<button type="button" class="btn btn-success">Success</button>
+<button type="button" class="btn btn-danger">Danger</button>
+<button type="button" class="btn btn-warning">Warning</button>
+<button type="button" class="btn btn-info">Info</button>
+<button type="button" class="btn btn-light">Light</button>
+<button type="button" class="btn btn-dark">Dark</button>
+
+<button type="button" class="btn btn-link">Link</button>
+
+
+
+{% endblock %}
