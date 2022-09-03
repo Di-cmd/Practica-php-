@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello pagina 2!{% endblock %}
+
+{% block body %}
+
+
+{# Este parent sirve para llamar todo lo que este dentro de la base. trae toda la informacion desde }
+donde se esta haciendo la extends  #}
+
+{{ parent() }}
+
+
+
+<h1> Exito </h1>
+<p> como que si esta entrando </p>
+
+
+
+
+{% endblock %}
