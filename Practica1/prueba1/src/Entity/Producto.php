@@ -36,7 +36,7 @@ class Producto
      * @ORM\ManyToOne(targetEntity=Categoria::class, inversedBy="productos")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Categoria;
+    private $categoria;
 
 
 
@@ -83,7 +83,7 @@ class Producto
         return $this->categoria;
     }
 
-    public function setCategoria($categoria)
+    public function setCategoria(Categoria $categoria)
     {
       $this->categoria=$categoria;
     }

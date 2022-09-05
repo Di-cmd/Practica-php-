@@ -33,6 +33,15 @@ class ProductoRepository extends ServiceEntityRepository
     public function remove(Producto $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
+        $conn = $this->getEntityManager()->getConnection();
+
+        // $sql = $conn->prepare("SELECT * FROM nombre = :nombre");
+        // $resultSet = $sql->executeQuery([
+        //     'nombre' => 'diana'
+        // ]);
+
+        // return $resultSet->fetchAllAssociative();
+
 
         if ($flush) {
             $this->getEntityManager()->flush();

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Categoria;
 use App\Entity\Producto;
+use App\Form\ProductoType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +16,16 @@ class StandarController extends AbstractController
      */
     public function index(): Response
     {
+        // se llama la persistencia de la base de datos 
+        $producto=new Producto();
 
+
+        // Y se llama al formulario.
+        $form=$this->createForm(ProductoType::class, $producto);
+
+
+
+        
         $numero1=1;
         $numero2=100;
         $suma=$numero1+$numero2;
@@ -53,9 +63,17 @@ class StandarController extends AbstractController
         $entityManager=$this->getDoctrine()->getManager();
         //se crea un nuevo objeto de la entidad producto  y se le asignan valores al nombre y al codigo, por medio de los metodos 
         // set de cada una de los campos. 
+
+        //$verificarCategoria=$entityManager->getRepository(Producto::class)->findOneBy($parametro);
+        //if($parametro){}else{}
+   
         $categoria=new Categoria("Tecnologia");
+        $entityManager->persist($categoria);
+        $entityManager->flush();
+
         $producto=new Producto('televisor', 'tv09');
         $producto->setCategoria($categoria);
+
         $entityManager->persist($producto);
         $entityManager->flush();
 

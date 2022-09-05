@@ -92,7 +92,7 @@ class Categoria
         if ($this->productos->removeElement($producto)) {
             // set the owning side to null (unless already changed)
             if ($producto->getCategoria() === $this) {
-                $producto->setCategoria(null);
+     
             }
         }
         
