@@ -1,0 +1,141 @@
+================FOSUSERBUNDLE==============
+framework.yaml agregar bajo el framework: los servicios de traduccion
+
+1) translator: ~
+
+2)DEscomentar las sesiones
+
+    session:
+        handler_id: ~
+
+3)LIMPIAR CACHE
+3.1) composer require symfony/templating
+3.2) composer require symfony/validator
+4)dentro del framework.yaml 
+
+
+fos_user:
+    registration:
+            confirmation:
+                enabled: true
+    db_driver: orm
+    firewall_name: main
+    user_class: App\Entity\User
+    from_email:
+           address: correo@algo.com
+           sender_name: test
+    service:
+            mailer: 'fos_user.mailer.noop'
+
+
+
+5) ejecutar 
+composer require friendsofsymfony/user-bundle "~2.0"
+//con el skeleton de symfony se automatizan procesos, agregando el bundle al bundles.php de symfony. y resgistrandolo automaticamente
+
+
+6) Crear mi clase USER (Entidad)
+
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
+
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ */
+class User extends BaseUser
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+    }
+}
+
+
+
+7) Configurar los parametros de seguridad (borrar todo y agregar):
+Config> pagckage >security.yml
+
+security:
+    encoders:
+            FOS\UserBundle\Model\UserInterface: bcrypt
+
+    role_hierarchy:
+            ROLE_ADMIN:       ROLE_USER
+            ROLE_SUPER_ADMIN: ROLE_ADMIN
+    # https://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+        fos_userbundle:
+                id: fos_user.user_provider.username
+        in_memory: { memory: ~ }
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            pattern: ^/
+            form_login:
+              provider: fos_userbundle
+              csrf_token_generator: security.csrf.token_manager
+
+            logout:       true
+            anonymous:    true
+
+            # activate different ways to authenticate
+
+            # http_basic: ~
+            # https://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: ~
+            # https://symfony.com/doc/current/cookbook/security/form_login_setup.html
+    access_control:
+            - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/admin/, role: ROLE_ADMIN }
+
+8) configurar en el archivo de rutas
+# config/routing.yaml
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+
+9) Actualizar el esquema da la bd
+
+
+(Puede generar probleas con las migraciones debido a que la base de datos postgrest es muy actualizada. para ello):
+https://github.com/doctrine/dbal/issues/2868
+
+10) Registrar las rutas en 
+#/config/routing.yml
+
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile

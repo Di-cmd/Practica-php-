@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Categoria;
 use App\Entity\Producto;
 use App\Form\ProductoType;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -15,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StandarController extends AbstractController
 {
+    
     /**
      * @Route("/", name="index")
      */
@@ -45,7 +47,7 @@ class StandarController extends AbstractController
         $categoria=new Categoria("Hogar");
         $entityManager->persist($categoria);
         $entityManager->flush();
-        $producto=$form->getData();
+        $producto=$form->getData(); 
         $producto->setCategoria($categoria);
         $entityManager->persist($producto);
         $entityManager->flush(); 
