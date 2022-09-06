@@ -5,7 +5,11 @@ namespace App\Controller;
 use App\Entity\Categoria;
 use App\Entity\Producto;
 use App\Form\ProductoType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+//Se importa el Request 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,10 +18,11 @@ class StandarController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
         // se llama la persistencia de la base de datos 
         $producto=new Producto();
+
 
 
         // Y se llama al formulario.
@@ -31,6 +36,23 @@ class StandarController extends AbstractController
         $suma=$numero1+$numero2;
         $nombre="Diego, andrea, camila, mariana";
 
+
+      $form->handleRequest($request);
+      if($form->isSubmitted() && $form->isValid()){
+        $entityManager=$this->getDoctrine()->getManager();
+
+
+        $categoria=new Categoria("Hogar");
+        $entityManager->persist($categoria);
+        $entityManager->flush();
+        $producto=$form->getData();
+        $producto->setCategoria($categoria);
+        $entityManager->persist($producto);
+        $entityManager->flush(); 
+        return $this->redirectToRoute('index');
+
+      }
+
         return $this->render('standar/index.html.twig', [
             'controller_name' => 'StandarController',
             'usuario' => 'Diana Salazar',
@@ -38,6 +60,7 @@ class StandarController extends AbstractController
             'numero2' => $numero2,
             'suma' => $suma,
             'nombre' => $nombre,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -45,10 +68,40 @@ class StandarController extends AbstractController
   * @Route("/pagina2/{nombre}", name="pagina2")
   */
 
-    public function pagina2($nombre)
+    public function pagina2($nombre, Request $request)
     {
+
+        $producto= new Producto();
+        $form=$this->createFormBuilder()
+        ->add('nombre')
+        ->add('codigo')
+        ->add('categoria',EntityType::class, 
+        
+        ['class'=>Categoria::class ,
+        'choice_label'=>'nombre'])
+
+        ->add('Enviar', SubmitType::class)
+        ->getForm();
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+
+            // Se tiene que llamar para persistir:
+
+            $entityManager=$this->getDoctrine()->getManager();
+
+            $data=$form->getData();
+            $producto=new Producto($data['nombre'], $data['codigo']);
+            $producto->setCategoria($data['categoria']);
+            $entityManager->persist($producto);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('pagina2',['nombre'=>'Guardado Exitoso']);
+
+        }
+
         return $this->render('standar/pagina2.html.twig',[
             'nombre'=>$nombre, 
+            'form'=>$form->createView()
         ]);
     }
 
