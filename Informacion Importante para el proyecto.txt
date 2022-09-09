@@ -1,0 +1,15 @@
+ https://docs.google.com/forms/d/e/1FAIpQLSeURYwBXo0Bszo6TRvgfuYemejGLgh9q8qCnuAYTumcGF2rYg/viewform
+
+ (Desconectado) use ApiPlatform\Core\Annotation\ApiResource;
+
+
+
+const request = await axios.get('https://www.datos.gov.co/resource/xdk5-pm3f.json')
+
+
+async getCiudades() {
+                let request = await axios.get(`https://www.datos.gov.co/resource/xdk5-pm3f.json?departamento=${this.clienteForm.departamentoCliente}`)
+                this.citiesAPI = request.data;
+                return this.citiesAPI;
+            },
+
